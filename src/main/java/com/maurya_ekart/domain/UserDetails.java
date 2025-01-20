@@ -16,7 +16,15 @@ private String mobileNumber;
 private String password;
 private List<Products>products;
 private List<Role>roles;
+private List<ProductCategory>productCategory;
 
+
+public List<ProductCategory> getProductCategory() {
+	return productCategory;
+}
+public void setProductCategory(List<ProductCategory> productCategory) {
+	this.productCategory = productCategory;
+}
 public String getId() {
 	return id;
 }
