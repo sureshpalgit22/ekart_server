@@ -85,7 +85,14 @@ public class MauryaEndpoint {
     	
     }
     
+    @GetMapping("/get-all-products")
+    public List<Products> getAllProducts(){
+    	return mauryaService.getAllProductDetails();
+    }
     
-    
-	
+    @GetMapping("/get-product-by-id")
+    public Products getProductById(@RequestParam("productId") String productId){
+    	return mauryaService.getProductById(productId);
+    }
+     
 }

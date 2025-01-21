@@ -32,6 +32,10 @@ public interface MauryaService {
 
 	UserDto getUserId(String userEmailOrMobileNumber);
 
+	List<Products> getAllProductDetails();
+
+	Products getProductById(String productId);
+
 	
 
 	

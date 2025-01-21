@@ -60,6 +60,26 @@ public class MauryaServiceImpl implements MauryaService{
 	 private boolean isValidEmailOrMobileNumber(String input) {
 	        return input.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$") || input.matches("^\\d{10}$");
 	    }
+	 
+	 @Override
+	 public UserDto getUserId(String userEmailOrMobileNumber) {
+	     try {
+	         Optional<UserDetails> userOptional = mauryaRpository.findByEmail(userEmailOrMobileNumber);
+	         
+	         if (userOptional.isPresent()) {
+	             UserDetails user = userOptional.get();
+	             UserDto userDetail = new UserDto();
+	             userDetail.setId(user.getId());
+	             return userDetail;
+	         } else {
+	             throw new SellerException("User not found for email or mobile number: " + userEmailOrMobileNumber);
+	         }
+
+	     } catch (Exception e) {
+	         e.printStackTrace();
+	         throw new SellerException("Failed to retrieve user details: " + e.getMessage());
+	     }
+	 }
 
 	@Override
 	public ProductCategory saveCategory(ProductCategory categoryDetails) {
@@ -241,7 +261,7 @@ private double calculateDiscount(Double mrp, Double price) {
 
 @Override
 public List<Products> getProductDetails(String id) {
-	 Optional<UserDetails> users = mauryaRpository.findById(id);
+ Optional<UserDetails> users = mauryaRpository.findById(id);
  List<Products> products=new ArrayList<>();
  
  if(users.isPresent()) {
@@ -253,26 +273,59 @@ public List<Products> getProductDetails(String id) {
 }
 
 
-
 @Override
-public UserDto getUserId(String userEmailOrMobileNumber) {
+public List<Products> getAllProductDetails() {
     try {
-        Optional<UserDetails> userOptional = mauryaRpository.findByEmail(userEmailOrMobileNumber);
         
-        if (userOptional.isPresent()) {
-            UserDetails user = userOptional.get();
-            UserDto userDetail = new UserDto();
-            userDetail.setId(user.getId());
-            return userDetail;
-        } else {
-            throw new SellerException("User not found for email or mobile number: " + userEmailOrMobileNumber);
+        List<UserDetails> users = mauryaRpository.findAll();
+        List<Products> products = new ArrayList<>();
+
+        
+        if (!users.isEmpty()) {
+         
+            for (UserDetails user : users) {
+                products.addAll(user.getProducts());
+            }
         }
 
+        return products;
     } catch (Exception e) {
-        e.printStackTrace();
-        throw new SellerException("Failed to retrieve user details: " + e.getMessage());
+    	 throw new SellerException("Failed to get products details: " + e.getMessage());
     }
 }
+
+
+
+public Products getProductById(String productId) {
+    try {
+       
+        List<UserDetails> users = mauryaRpository.findAll();
+        Products details = null; // To store the matching product
+        
+        if (!users.isEmpty()) {
+            for (UserDetails user : users) {
+                // Iterate through each product of the user
+                for (Products product : user.getProducts()) {
+                  
+                    if (productId.equals(product.getProductId())) {
+                        details = product; 
+                        break;
+                    }
+                }
+                if (details != null) {
+                    break; 
+                }
+            }
+        }
+
+       
+        return details;
+    } catch (Exception e) {
+        throw new SellerException("Failed to get product details: " + e.getMessage());
+    }
+}
+
+
 
 
 

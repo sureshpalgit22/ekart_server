@@ -1,5 +1,7 @@
 package com.maurya_ekart.domain;
 
+import java.util.List;
+
 import org.springframework.data.annotation.Id;
 
 public class Products {
@@ -10,9 +12,12 @@ private Double price;
 private Double mrp;
 private Double discountPercentage;
 private Integer productQuantity;
-private String image;
+private List<String> image;
 private String category;
 private String description;
+private String brand;
+private String quantityUnit;
+private String colour;
 
 
 
@@ -36,12 +41,7 @@ public String getCategory() {
 public void setCategory(String category) {
 	this.category = category;
 }
-public String getImage() {
-	return image;
-}
-public void setImage(String image) {
-	this.image = image;
-}
+
 public Double getPrice() {
 	return price;
 }
@@ -72,6 +72,31 @@ public String getDescription() {
 public void setDescription(String description) {
 	this.description = description;
 }
+public String getBrand() {
+	return brand;
+}
+public void setBrand(String brand) {
+	this.brand = brand;
+}
+public String getQuantityUnit() {
+	return quantityUnit;
+}
+public void setQuantityUnit(String quantityUnit) {
+	this.quantityUnit = quantityUnit;
+}
+public String getColour() {
+	return colour;
+}
+public void setColour(String colour) {
+	this.colour = colour;
+}
+public List<String> getImage() {
+	return image;
+}
+public void setImage(List<String> image) {
+	this.image = image;
+}
+
 
 
 
