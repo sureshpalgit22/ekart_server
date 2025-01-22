@@ -304,7 +304,7 @@ public Products getProductById(String productId) {
         
         if (!users.isEmpty()) {
             for (UserDetails user : users) {
-                // Iterate through each product of the user
+                
                 for (Products product : user.getProducts()) {
                   
                     if (productId.equals(product.getProductId())) {

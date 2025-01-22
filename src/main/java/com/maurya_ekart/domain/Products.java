@@ -18,6 +18,7 @@ private String description;
 private String brand;
 private String quantityUnit;
 private String colour;
+private String deliveryCharge;
 
 
 
@@ -96,6 +97,14 @@ public List<String> getImage() {
 public void setImage(List<String> image) {
 	this.image = image;
 }
+public String getDeliveryCharge() {
+	return deliveryCharge;
+}
+public void setDeliveryCharge(String deliveryCharge) {
+	this.deliveryCharge = deliveryCharge;
+}
+
+
 
 
 
