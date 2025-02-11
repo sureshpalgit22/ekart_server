@@ -83,41 +83,49 @@ public class MauryaServiceImpl implements MauryaService{
 
 	@Override
 	public ProductCategory saveCategory(ProductCategory categoryDetails) {
-	    String id = categoryDetails.getUserId();
-	    
 	   
-	    Optional<UserDetails> users = mauryaRpository.findById(id);
-	    
-	    if (users.isPresent()) {
-	        UserDetails user = users.get();
-	        
-	       
-	        ProductCategory cd = new ProductCategory();
-	        cd.setCategoryName(categoryDetails.getCategoryName()); 
-	        cd.setCategoryImage(categoryDetails.getCategoryImage());
-	        Random random = new Random();
-	        int randomNumber = 1000 + random.nextInt(9000);
-	        
-	        String categoryId = categoryDetails.getCategoryName().substring(0, 3).toUpperCase() + randomNumber;
-	        cd.setCategoryId(categoryId);
-	        cd.setUserId(id);
-	        
-	        List<ProductCategory> productCategories = user.getProductCategory();
-	        if (productCategories == null) {
-	            productCategories = new ArrayList<>();
-	        }
-	        productCategories.add(cd);  
-	        
-	        
-	        user.setProductCategory(productCategories);
-	        
-	     
-	        mauryaRpository.save(user);  
-	        return cd;  
-	    }
-	    
-	   
-	    return null;
+		try {
+			 String id = categoryDetails.getUserId();
+			    
+			   
+			    Optional<UserDetails> users = mauryaRpository.findById(id);
+			    List<UserDetails> users1 = mauryaRpository.findAll();
+
+			    
+			    
+			    if (users.isPresent()) {
+			        UserDetails user = users1.get(0);
+			        
+			       
+			        ProductCategory cd = new ProductCategory();
+			        cd.setCategoryName(categoryDetails.getCategoryName()); 
+			        cd.setCategoryImage(categoryDetails.getCategoryImage());
+			        Random random = new Random();
+			        int randomNumber = 1000 + random.nextInt(9000);
+			        
+			        String categoryId = categoryDetails.getCategoryName().substring(0, 3).toUpperCase() + randomNumber;
+			        cd.setCategoryId(categoryId);
+			        cd.setUserId(id);
+			        
+			        List<ProductCategory> productCategories = user.getProductCategory();
+			        if (productCategories == null) {
+			            productCategories = new ArrayList<>();
+			        }
+			        productCategories.add(cd);  
+			        
+			        
+			        user.setProductCategory(productCategories);
+			        
+			     
+			        mauryaRpository.save(user);  
+			    }
+			    
+		          
+				return categoryDetails;	    
+		} catch (Exception e) {
+			e.printStackTrace();
+	    	 throw new SellerException("Failed to get products details: " + e.getMessage());
+		}
 	}
 
 

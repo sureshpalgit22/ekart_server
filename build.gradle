@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.2.11'
 	id 'io.spring.dependency-management' version '1.1.6'
+	id 'war'
 }
 
 group = 'com.maurya-ekart'
@@ -11,6 +12,10 @@ java {
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(17)
 	}
+}
+
+bootWar {
+    archiveFileName = 'myapp.war' // Set WAR file name
 }
 
 repositories {
@@ -24,6 +29,8 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 	implementation 'org.glassfish.jersey.media:jersey-media-json-jackson:2.29.1'
+    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat' // Use Tomcat as a provided dependency
+	
 
 	
 	
